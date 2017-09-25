@@ -1,12 +1,10 @@
-// Imports dependencies
+'use strict';
+
+// Imports dependencies and set up http server
 const 
   express = require('express'),
-  bodyParser = require('body-parser');
-
-// Creates an express HTTP server
-let app = express();
-app.use(bodyParser.urlencoded({"extended": false}));
-app.use(bodyParser.json());
+  bodyParser = require('body-parser'),
+  app = express().use(bodyParser.json()); // creates express http server
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
@@ -16,7 +14,7 @@ app.post('/webhook', (req, res) => {
  
   let body = req.body;
 
-  // Checks this is a page subscription
+  // Checks this is an event from a page subscription
   if (body.object === 'page') {
 
     // Iterates over each entry - there may be multiple if batched
@@ -24,13 +22,18 @@ app.post('/webhook', (req, res) => {
 
       // Gets the message. entry.messaging is an array, but 
       // will only ever contain one message, so we get index 0
-      let message = JSON.stringify(entry.messaging[0].message);
-      console.log(message);
+      let webhookEvent = entry.messaging[0];
+      console.log(webhookEvent);
+      
     });
-  }
 
-  // Returns a '200 OK' response to all requests
-  res.send('EVENT_RECEIVED').status(200);
+    // Returns a '200 OK' response to all requests
+    res.status(200).send('EVENT_RECEIVED');
+
+  } else {
+    // Returns a '404 Not Found' if event is not from a page subscription
+    res.sendStatus(404);
+  }
 
 });
 
@@ -53,12 +56,11 @@ app.get('/webhook', (req, res) => {
       
       // Responds with the challenge token from the request
       console.log('WEBHOOK_VERIFIED');
-      res.send(challenge);
+      res.status(200).send(challenge);
     
     } else {
-
-      // Responds with an error if the tokens do not match
-      res.send('Error, wrong validation token');    
+      // Responds with '403 Forbidden' if verify tokens do not match
+      res.sendStatus(403);      
     }
   }
 });
