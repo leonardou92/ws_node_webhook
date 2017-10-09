@@ -50,6 +50,8 @@ app.post('/webhook', (req, res) => {
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
   
+  const VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>";
+  
   // Parse the query params
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
