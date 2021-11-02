@@ -32,7 +32,7 @@ app.post('/webhook', (req, res) => {
   if(request.body.statuses){
     res.sendStatus(200);
   } else {
-    // Return a '404 Not Found' if event is not from a page subscription
+    // Return a '404 Not Found' if event is not from a whatsApp API
     res.sendStatus(404);
   }
 
