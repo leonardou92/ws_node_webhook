@@ -38,10 +38,11 @@ app.post('/webhook', (req, res) => {
 
 });
 
-// Accepts GET requests at the /webhook endpoint
+// Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
 app.get('/webhook', (req, res) => {
   
-  /** UPDATE YOUR VERIFY TOKEN **/
+  /** UPDATE YOUR VERIFY TOKEN
+  This will be the Verify Token value when you set up webhook**/
   const VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>";
   
   // Parse params from the webhook verification request
