@@ -26,10 +26,10 @@ app.post('/webhook', (req, res) => {
   let body = req.body;
   
   // Check the Incoming webhook message
-  console.log("Incoming webhook: " + JSON.stringify(request.body));
+  console.log("Incoming webhook: " + JSON.stringify(req.body));
   
   // Validate the webhook
-  if(request.body.statuses){
+  if(req.body.object){
     res.sendStatus(200);
   } else {
     // Return a '404 Not Found' if event is not from a whatsApp API
