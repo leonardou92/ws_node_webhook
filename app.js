@@ -8,7 +8,7 @@
 "use strict";
 
 // access token for your app (copy from DevX getting started page)
-const token = "EAAAO6uZBxesMBABQbmlcGai4bd5CPKv1LefFTs0h0ZCZBugNcsA6zLNIqso16IxRLJ0MwGnjE0ZB6LMSZBX0psFkdA6DlZCkvITGZCMbwjZBOsq3aVWRxrUk5Rplj14KToMRvVTWtkcFdcHs87tiTQXnZCO4yIko7qy4FMkvEZAkWQk9waZB2ZAfGMjl8ZB6RkbwAmKOvDk6M5t7zcYv3BUbUlwkhNmZBjnYjZCx3qARaxeeLNKvo5CMq5f17VlZBpQ0LZADEn4OddEifNETdCfrX02rHMQtl2OzNytXJSUsZD";
+const token = "EAAAjMw8oZAUABAHMaZBJEfs3GFcUL9VHTmEgxtXYLOp2mghAN8Yv2j7juPsIgbOrTV5Ltk1WJb627pcKsvZB3nOUZApeqp7k5yvAsdsLiri4iZC13N0UBxF9rpcFaQ1hZCFry6A5F8xSPZA1TqtWXHie67TWH3iDVcs7ZC8zKdCZC8p6B4ljipBKH3EpeIcLJzMiLgFZCR45xOZCZBECqVfMjl37Hsgv4eijpYZCn5VgMIexmFo0zKMVfKEtCnMIZBb7fArG4OFynPbDvMkTyHNmLZAjCEfQAvBSxZBZCiFcZD";
 
 // Imports dependencies and set up http server
 const request = require("request"),
@@ -55,7 +55,7 @@ app.post("/webhook", (req, res) => {
 });
 
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
-app.get("/webhook2", (req, res) => {
+app.get("/webhook", (req, res) => {
   /** UPDATE YOUR VERIFY TOKEN
   This will be the Verify Token value when you set up webhook**/
   const VERIFY_TOKEN = "blue_panda";
