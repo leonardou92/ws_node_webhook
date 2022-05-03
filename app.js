@@ -27,7 +27,6 @@ app.post("/webhook", (req, res) => {
 
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
-  console.log(req.query);
 
   // Validate the webhook
   if (req.body.object) {
@@ -56,7 +55,7 @@ app.post("/webhook", (req, res) => {
 });
 
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
-app.get("/webhook", (req, res) => {
+app.get("/webhook2", (req, res) => {
   /** UPDATE YOUR VERIFY TOKEN
   This will be the Verify Token value when you set up webhook**/
   const VERIFY_TOKEN = "blue_panda";
@@ -65,7 +64,6 @@ app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
   let challenge = req.query["hub.challenge"];
-  console.log(req.query);
 
   // Check if a token and mode were sent
   if (mode && token) {
