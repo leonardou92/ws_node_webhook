@@ -8,7 +8,7 @@
 "use strict";
 
 // access token for your app (copy from DevX getting started page)
-const token = "";
+const token = "EAAAO6uZBxesMBABQbmlcGai4bd5CPKv1LefFTs0h0ZCZBugNcsA6zLNIqso16IxRLJ0MwGnjE0ZB6LMSZBX0psFkdA6DlZCkvITGZCMbwjZBOsq3aVWRxrUk5Rplj14KToMRvVTWtkcFdcHs87tiTQXnZCO4yIko7qy4FMkvEZAkWQk9waZB2ZAfGMjl8ZB6RkbwAmKOvDk6M5t7zcYv3BUbUlwkhNmZBjnYjZCx3qARaxeeLNKvo5CMq5f17VlZBpQ0LZADEn4OddEifNETdCfrX02rHMQtl2OzNytXJSUsZD";
 
 // Imports dependencies and set up http server
 const request = require("request"),
@@ -27,6 +27,7 @@ app.post("/webhook", (req, res) => {
 
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
+  console.log(req.query);
 
   // Validate the webhook
   if (req.body.object) {
@@ -64,6 +65,7 @@ app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
   let challenge = req.query["hub.challenge"];
+  console.log(req.query);
 
   // Check if a token and mode were sent
   if (mode && token) {
