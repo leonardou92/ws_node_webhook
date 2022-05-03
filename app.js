@@ -34,7 +34,7 @@ app.post("/webhook", (req, res) => {
   // phone number id of your phone number you are sending from (copy from DevX getting started page)
   const num_id = '26902205832071';
     
-  if (req.body.entry && req.body.entry[0].changes && req.body.entry[0].changes[0] && req.body.entry[0].changes[0].value.messages && event.body.entry[0].changes[0].value.messages[0] ) {
+  if (req.body.entry && req.body.entry[0].changes && req.body.entry[0].changes[0] && req.body.entry[0].changes[0].value.messages && req.body.entry[0].changes[0].value.messages[0] ) {
     let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
     let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
     axios({
