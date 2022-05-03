@@ -8,8 +8,7 @@
 "use strict";
 
 // access token for your app (copy from DevX getting started page)
-const token =
-  "EAAAO6uZBxesMBAOZBZBlDNPZA0rPXDdrRumSBHyn95uoJDA1akwDZAKggZAZCgv3PWHLmwMQk21MyeZCgxlSiSvXaeXf8PV9frjmh8dsr85PhSs9faOKZBT78ZARQAAc8jZBbCZAXYZALjj0Pw8NQ516mZAtRH9wFToy1iFWUZB2muw5MX3NgE729j43usIxgzBdl9G70eNdyC5nje188ysqEDycla8xHVwoWlUGVxhLSpGeWZBvRIZAGjkez3pmG0Uns7ehq3ayaLktevi9TQHiPdMBpHFamOO3mEfHqjusZD";
+const token = "";
 
 // Imports dependencies and set up http server
 const request = require("request"),
