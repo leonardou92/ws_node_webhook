@@ -8,7 +8,7 @@
 "use strict";
 
 // access token for your app (copy from DevX getting started page)
-const token = "EAAIyIBvE4I4BAJk4bsP9eL5SXGrCS9C0XZCpG6tAcM4vs49W3GY9iOGMcuEmPv5J4zUT47GPdu36gKpY7qjARaLZCcEiKWmEuQRupwesBasT9crv1gqyQmS3OP102Y6xoLj49CrPIZCKhGY5P911Nkrw7VXzjCEVBmKM72eKg6NbYc3G77yTvyKTVrOR3oyvpZCjhkZCq5wZDZD";
+const token = process.env.WHATSAPP_TOKEN;
 
 // Imports dependencies and set up http server
 const request = require("request"),
