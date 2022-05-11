@@ -1,16 +1,12 @@
 {
-  "name": "messenger-quick-start",
+  "name": "whatsapp-cloudapi-quick-start",
   "version": "1.0.0",
-  "description": "An example webhook for Facebook Messenger quick start tutorial.",
+  "description": "An example webhook for WhatsApp Cloud API quick start tutorial.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fbsamples/messenger-platform-samples.git"
-  },
-  "author": "Facebook",
+  "author": "WhatsApp",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
@@ -19,6 +15,6 @@
     "request": "^2.88.2"
   },
   "engines": {
-    "node": "~4.1.2"
+    "node": "12.x"
   }
 }

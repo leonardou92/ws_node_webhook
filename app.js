@@ -7,7 +7,9 @@
 
 "use strict";
 
-// access token for your app (copy from DevX getting started page)
+// Access token for your app
+// (copy token from DevX getting started page
+// and save it as environment variable into the .env file)
 const token = process.env.WHATSAPP_TOKEN;
 
 // Imports dependencies and set up http server
@@ -42,14 +44,14 @@ app.post("/webhook", (req, res) => {
         data: {
           messaging_product: "whatsapp",
           to: from,
-          text: { body: "ack: " + msg_body },
+          text: { body: "Ack: " + msg_body },
         },
         headers: { "Content-Type": "application/json" },
       });
     }
     res.sendStatus(200);
   } else {
-    // Return a '404 Not Found' if event is not from a whatsApp API
+    // Return a '404 Not Found' if event is not from a WhatsApp API
     res.sendStatus(404);
   }
 });
