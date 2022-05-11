@@ -33,14 +33,23 @@ app.post("/webhook", (req, res) => {
   // Validate the webhook
   if (req.body.object) {
     if (
-      req.body.entry && req.body.entry[0].changes && req.body.entry[0].changes[0] && req.body.entry[0].changes[0].value.messages && req.body.entry[0].changes[0].value.messages[0]
+      req.body.entry &&
+      req.body.entry[0].changes &&
+      req.body.entry[0].changes[0] &&
+      req.body.entry[0].changes[0].value.messages &&
+      req.body.entry[0].changes[0].value.messages[0]
     ) {
-      let phone_number_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
+      let phone_number_id =
+        req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
       axios({
         method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-        url: "https://graph.facebook.com/v12.0/" + phone_number_id + "/messages?access_token=" + token,
+        url:
+          "https://graph.facebook.com/v12.0/" +
+          phone_number_id +
+          "/messages?access_token=" +
+          token,
         data: {
           messaging_product: "whatsapp",
           to: from,
@@ -58,9 +67,11 @@ app.post("/webhook", (req, res) => {
 
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
 app.get("/webhook", (req, res) => {
-  /** UPDATE YOUR VERIFY TOKEN
-  This will be the Verify Token value when you set up webhook**/
-  const VERIFY_TOKEN = "blue_panda";
+  /**
+   * UPDATE YOUR VERIFY TOKEN
+   *This will be the Verify Token value when you set up webhook
+  **/
+  const verify_token = process.env.VERIFY_TOKEN;
 
   // Parse params from the webhook verification request
   let mode = req.query["hub.mode"];
@@ -70,7 +81,7 @@ app.get("/webhook", (req, res) => {
   // Check if a token and mode were sent
   if (mode && token) {
     // Check the mode and token sent are correct
-    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+    if (mode === "subscribe" && token === verify_token) {
       // Respond with 200 OK and challenge token from the request
       console.log("WEBHOOK_VERIFIED");
       res.status(200).send(challenge);
