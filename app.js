@@ -30,7 +30,7 @@ app.post("/webhook", (req, res) => {
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
 
-  // Validate the webhook
+  // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (req.body.object) {
     if (
       req.body.entry &&
@@ -66,6 +66,7 @@ app.post("/webhook", (req, res) => {
 });
 
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
+// info on verification request payload: https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests 
 app.get("/webhook", (req, res) => {
   /**
    * UPDATE YOUR VERIFY TOKEN
