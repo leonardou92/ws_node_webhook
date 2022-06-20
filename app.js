@@ -28,17 +28,20 @@ app.post("/webhook", (req, res) => {
   let body = req.body;
 
   // Check the Incoming webhook message
-  console.log(JSON.stringify(req.body, null, 2));
-  const my_json = res.send(JSON.stringify(req.body, null, 2));
+  //console.log(JSON.stringify(req.body, null, 2));
   
+  const my_json = JSON.stringify(req.body, null, 2);
+  console.log(my_json);
   const doPostRequest = async () => {
-
-    let resp = await axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/', my_json);
-
-    let data = resp.data;
-    console.log(data);
-  }
-
+    try {
+      const resp = await axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/', my_json);
+      console.log(resp.data);
+    }
+    catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+  };
   doPostRequest();
   
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
