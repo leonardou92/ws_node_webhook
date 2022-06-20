@@ -59,9 +59,11 @@ app.post("/webhook", (req, res) => {
       });
     }
     res.sendStatus(200);
+    
   } else {
     // Return a '404 Not Found' if event is not from a WhatsApp API
     res.sendStatus(404);
+    
   }
 });
 
@@ -86,9 +88,11 @@ app.get("/webhook", (req, res) => {
       // Respond with 200 OK and challenge token from the request
       console.send("WEBHOOK_VERIFIED");
       res.status(200).send(challenge);
+      
     } else {
       // Responds with '403 Forbidden' if verify tokens do not match
       res.sendStatus(403);
+      res.send("hola");
     }
   }
 });
