@@ -68,6 +68,7 @@ app.post("/webhook", (req, res) => {
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
 // info on verification request payload: https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests 
 app.get("/webhook", (req, res) => {
+  //res.send(JSON.stringify(req.body, null, 2));
   /**
    * UPDATE YOUR VERIFY TOKEN
    *This will be the Verify Token value when you set up webhook
@@ -78,7 +79,7 @@ app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
   let challenge = req.query["hub.challenge"];
-
+  
   // Check if a token and mode were sent
   if (mode && token) {
     // Check the mode and token sent are correct
