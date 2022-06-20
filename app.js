@@ -29,15 +29,12 @@ app.post("/webhook", (req, res) => {
 
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
-  const my_json = JSON.stringify(req.body, null, 2));
+  const my_json = JSON.stringify(req.body, null, 2);
   
-  const doPostRequest = async () => {
-
+  async function doPostRequest(my_json){
     let resp = await axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/', my_json);
-
     let data = resp.data;
     console.log(data);
-    return data;
   }
 
   doPostRequest();
