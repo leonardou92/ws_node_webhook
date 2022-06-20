@@ -12,7 +12,6 @@
 // and save it as environment variable into the .env file)
 const token = process.env.WHATSAPP_TOKEN;
 
-
 // Imports dependencies and set up http server
 const request = require("request"),
   express = require("express"),
@@ -20,10 +19,6 @@ const request = require("request"),
   axios = require("axios").default,
   app = express().use(body_parser.json()); // creates express http server
 
-const http=require('http');
-http.createServer(function(req,resp){
-  
-}).
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
 
@@ -34,7 +29,7 @@ app.post("/webhook", (req, res) => {
 
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
-
+  res.send('hola');
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (req.body.object) {
     if (
@@ -68,7 +63,6 @@ app.post("/webhook", (req, res) => {
   } else {
     // Return a '404 Not Found' if event is not from a WhatsApp API
     res.sendStatus(404);
-    
   }
 });
 
@@ -93,11 +87,10 @@ app.get("/webhook", (req, res) => {
       // Respond with 200 OK and challenge token from the request
       console.send("WEBHOOK_VERIFIED");
       res.status(200).send(challenge);
-      
+      res.send('hola');
     } else {
       // Responds with '403 Forbidden' if verify tokens do not match
       res.sendStatus(403);
-  
     }
   }
 });
