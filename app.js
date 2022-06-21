@@ -31,26 +31,6 @@ app.post("/webhook", (req, res) => {
   console.log(JSON.stringify(req.body, null, 2));
   const my_json = JSON.stringify(req.body, null, 2);
   
-  /*const sendRequest = async () => {
-    try {
-        const resp = await axios({
-            method: 'POST',
-            url: 'http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',
-            data: {
-              campo1:'test'
-            }
-        });
-
-        console.log(resp.data);
-    } 
-    catch (err) {
-        // Handle Error Here
-        console.error(err);
-    }
-  }
-
-sendRequest();*/
-  
   axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
         .then((result) => {
          console.log(result.data);
