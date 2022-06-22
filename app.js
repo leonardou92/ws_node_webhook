@@ -64,19 +64,25 @@ app.post("/webhook", (req, res) => {
         }
       }
       else if(type === "image" || type === "video"){
-      var params = {
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": me,
-        "type": type,
-              "image": {
-                "id": id,
-                "caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
-              }
+        var params = {
+          "messaging_product": "whatsapp",
+          "recipient_type": "individual",
+          "to": me,
+          "type": type,
+          "image": {
+            "id": id,
+            "caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
           }
         }
-        
       }
+      else if(type === "document"){
+        "document": {
+          "id": "your-media-id",
+          "caption": "your-document-caption-to-be-sent",
+          "filename": "your-document-filename"
+        }
+      }
+      
      
         
         axios({
