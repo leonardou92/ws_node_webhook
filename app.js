@@ -35,7 +35,7 @@ app.post("/webhook", (req, res) => {
         .then((result) => {
          console.log(result.data);
         });
-  //insert webhook icaro
+  //insert webhook icarosoft
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (req.body.object) {
     if (
@@ -50,6 +50,7 @@ app.post("/webhook", (req, res) => {
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       if(req.body.entry[0].changes[0].value.messages[0].type === "image") {
         let msg_body = "image";
+
         // extract the message text from the webhook payload
         //resp text
         /*axios({
