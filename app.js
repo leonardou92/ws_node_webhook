@@ -49,11 +49,15 @@ app.post("/webhook", (req, res) => {
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
       let type = req.body.entry[0].changes[0].value.messages[0].type;
-      if(type === "image" || type === "sticker" || type === "video" || type === "audio") {
-        let msg_body = type;  
+      if(
+        type === "image" || type === "sticker" || type === "video" || 
+        type === "audio" || type === "location" || type === "contacts" || 
+        type === "unsupported" 
+      ) {
+        var msg_body = type;  
       } 
       else if(type === "text") {
-        let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+        var msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
       }
         let me = "584246303491";
         // extract the message text from the webhook payload
