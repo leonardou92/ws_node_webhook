@@ -51,30 +51,29 @@ app.post("/webhook", (req, res) => {
       let type = req.body.entry[0].changes[0].value.messages[0].type;
       let me = "584246303491"; //me
       if(type === "image"){
-        var params =
-          {
-              messaging_product: "whatsapp",
-              recipient_type: "individual",
-              to: me,
-              type: "image",
-              image: {
-                id: id,
-                caption: caption,
-              }
-          }
-        var data_json = JSON.stringify(params);
-        
         var id = req.body.entry[0].changes[0].value.messages[0].image.id;
         var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
+        var params =
+          {
+              "messaging_product": "whatsapp",
+              "recipient_type": "individual",
+              "to": me,
+              "type": "image",
+              "image": {
+                "id": id,
+                "caption": caption,
+              }
+          }
+
         //resp image
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
           url:
             "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
-            data_json,
+            data:params,
             headers: { "Content-Type": "application/json" },
         });
-        console.log(data_json);
+        console.log(params);
       }
       else if(type === "sticker" || type === "video" || 
         type === "audio" || type === "location" || type === "contacts" || 
