@@ -81,7 +81,7 @@ app.post("/webhook", (req, res) => {
             "to": from,
             "type": "template",
             "template": {
-              "name": "automatico",
+              "name": "no_disponible",
               "language": {
                 "code": "es"
               }
