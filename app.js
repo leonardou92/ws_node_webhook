@@ -48,8 +48,9 @@ app.post("/webhook", (req, res) => {
       let phone_number_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
-      if(req.body.entry[0].changes[0].value.messages[0].type === "image" || req.body.entry[0].changes[0].value.messages[0].type === "sticker") {
-        let msg_body = "image";
+      let type = req.body.entry[0].changes[0].value.messages[0].type;
+      if(type === "image" || type === "sticker" || type === "video") {
+        let msg_body = type;
         let me = "584246303491";
         // extract the message text from the webhook payload
         //resp text
