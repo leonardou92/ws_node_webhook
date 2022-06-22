@@ -45,15 +45,15 @@ app.post("/webhook", (req, res) => {
       req.body.entry[0].changes[0].value.messages &&
       req.body.entry[0].changes[0].value.messages[0]
     ) {
-      let phone_number_id =
-        req.body.entry[0].changes[0].value.metadata.phone_number_id;
+      let phone_number_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
+      let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
       if(req.body.entry[0].changes[0].value.messages[0].type === "image") {
         let msg_body = "image";
-
+        let me = "584246303491";
         // extract the message text from the webhook payload
         //resp text
-        /*axios({
+        axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
           url:
             "https://graph.facebook.com/v12.0/" +
@@ -62,12 +62,12 @@ app.post("/webhook", (req, res) => {
             token,
           data: {
             messaging_product: "whatsapp",
-            to: from,
-            text: { body: "Ack: " + msg_body },
+            to: me,
+            text: { body: "De: name "+ from +"\nMensaje:" + msg_body },
           },
           headers: { "Content-Type": "application/json" },
         });
-        */
+        
         //resp template
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -92,9 +92,10 @@ app.post("/webhook", (req, res) => {
         
       } else {
         let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+        let me = "584246303491";
         // extract the message text from the webhook payload
         //resp text
-        /*axios({
+        axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
           url:
             "https://graph.facebook.com/v12.0/" +
@@ -103,12 +104,11 @@ app.post("/webhook", (req, res) => {
             token,
           data: {
             messaging_product: "whatsapp",
-            to: from,
-            text: { body: "Ack: " + msg_body },
+            to: me,
+            text: { body: "De: "+ from +"\nMensaje:" + msg_body },
           },
           headers: { "Content-Type": "application/json" },
         });
-        */
         //resp template
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -122,7 +122,7 @@ app.post("/webhook", (req, res) => {
             "to": from,
             "type": "template",
             "template": {
-              "name": "automatico",
+              "name": "no_disponible",
               "language": {
                 "code": "es"
               }
