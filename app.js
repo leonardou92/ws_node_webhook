@@ -50,8 +50,7 @@ app.post("/webhook", (req, res) => {
       let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
       let type = req.body.entry[0].changes[0].value.messages[0].type; //type
       let me = "584246303491"; //me
-      var id = req.body.entry[0].changes[0].value.messages[0].image.id;
-      var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
+      
       if(type === "audio"){
         var params = {
           "messaging_product": "whatsapp",
@@ -63,12 +62,28 @@ app.post("/webhook", (req, res) => {
           }
         }
       }
-      else if(type === "image" || type === "video"){
+      else if(type === "image"){
+        var id = req.body.entry[0].changes[0].value.messages[0].image.id;
+        var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
         var params = {
           "messaging_product": "whatsapp",
           "recipient_type": "individual",
           "to": me,
-          "type": type,
+          type: type,
+          "image": {
+            "id": id,
+            "caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
+          }
+        }
+      }
+      else if(type === "video"){
+        var id = req.body.entry[0].changes[0].value.messages[0].video.id;
+        var caption = req.body.entry[0].changes[0].value.messages[0].video.caption;
+        var params = {
+          "messaging_product": "whatsapp",
+          "recipient_type": "individual",
+          "to": me,
+          "video": type,
           "image": {
             "id": id,
             "caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
@@ -76,25 +91,31 @@ app.post("/webhook", (req, res) => {
         }
       }
       else if(type === "document"){
-        "document": {
-          "id": "your-media-id",
-          "caption": "your-document-caption-to-be-sent",
-          "filename": "your-document-filename"
+        var id = req.body.entry[0].changes[0].value.messages[0].document.id;
+        var caption = req.body.entry[0].changes[0].value.messages[0].document.caption;
+        var filename = req.body.entry[0].changes[0].value.messages[0].document.filename;
+        var params = {
+          "messaging_product": "whatsapp",
+          "recipient_type": "individual",
+          "to": me,
+          "type": type,
+          "document": {
+            "id": id,
+            "caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
+            "filename": filename
+          }
         }
       }
-      
-     
-        
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
-            data:params,
-            headers: { "Content-Type": "application/json" },
-        });
-        console.log(params);
-      }
-      else if(type === "sticker" || type === "video" || 
+      axios({
+        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+        url: "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
+        data:params,
+        headers: {
+          "Content-Type": "application/json" 
+        },
+      });
+
+      /*else if(type === "sticker" || type === "video" || 
         type === "audio" || type === "location" || type === "contacts" || 
         type === "unsupported" || type === "document" 
       ) {
@@ -102,8 +123,8 @@ app.post("/webhook", (req, res) => {
       } 
       else if(type === "text") {
         var msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
-      }
-      
+      }*/
+      /*
       // extract the message text from the webhook payload
       //resp text
       axios({
@@ -134,7 +155,7 @@ app.post("/webhook", (req, res) => {
             }
           },
           headers: { "Content-Type": "application/json" },
-      });
+      });*/
     }
     res.sendStatus(200);
   } 
