@@ -63,7 +63,7 @@ app.post("/webhook", (req, res) => {
           data: {
             messaging_product: "whatsapp",
             to: me,
-            text: { body: "De: name "+ from +"\nMensaje:" + msg_body },
+            text: { body: "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body },
           },
           headers: { "Content-Type": "application/json" },
         });
@@ -105,7 +105,7 @@ app.post("/webhook", (req, res) => {
           data: {
             messaging_product: "whatsapp",
             to: me,
-            text: { body: "De: "+ from +"\nMensaje:" + msg_body },
+            text: { body: "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body },
           },
           headers: { "Content-Type": "application/json" },
         });
