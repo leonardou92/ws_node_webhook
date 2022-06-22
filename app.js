@@ -48,24 +48,37 @@ app.post("/webhook", (req, res) => {
       let phone_number_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
-      let type = req.body.entry[0].changes[0].value.messages[0].type;
+      let type = req.body.entry[0].changes[0].value.messages[0].type; //type
       let me = "584246303491"; //me
-      if(type === "image"){
-        var id = req.body.entry[0].changes[0].value.messages[0].image.id;
-        var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
-        var params =
-          {
-              "messaging_product": "whatsapp",
-              "recipient_type": "individual",
-              "to": me,
-              "type": "image",
+      var id = req.body.entry[0].changes[0].value.messages[0].image.id;
+      var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
+      if(type === "audio"){
+        var params = {
+          "messaging_product": "whatsapp",
+          "recipient_type": "individual",
+          "to": me,
+          "type": type,
+          "image": {
+            "id": id,
+          }
+        }
+      }
+      else if(type === "image" || type === "video"){
+      var params = {
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": me,
+        "type": type,
               "image": {
                 "id": id,
-                "caption": caption,
+                "caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
               }
           }
-
-        //resp image
+        }
+        
+      }
+     
+        
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
           url:
