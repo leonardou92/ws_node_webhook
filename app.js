@@ -50,55 +50,11 @@ app.post("/webhook", (req, res) => {
       let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
       let type = req.body.entry[0].changes[0].value.messages[0].type;
       if(type === "image" || type === "sticker" || type === "video" || type === "audio") {
-        let msg_body = type;
-        let me = "584246303491";
-        // extract the message text from the webhook payload
-        //resp text
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/" +
-            phone_number_id +
-            "/messages?access_token=" +
-            token,
-          data: {
-            messaging_product: "whatsapp",
-            to: me,
-            text: { body: "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body },
-          },
-          headers: { "Content-Type": "application/json" },
-        });
-        
-        //resp template
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/" +
-            phone_number_id +
-            "/messages?access_token=" +
-            token,
-          data: {
-            "messaging_product": "whatsapp",
-            "to": from,
-            "type": "template",
-            "template": {
-              "name": "no_disponible",
-              "language": {
-                "code": "es"
-              }
-            }
-          },
-          headers: { "Content-Type": "application/json" },
-        });
-        
+        let msg_body = type;  
       } 
-      else{
-        if(type === "audio"){
-          const msg_body = type;
-        }
-        else{
-           let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
-        }
+      else if(type === "text") {
+        let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+      }
         let me = "584246303491";
         // extract the message text from the webhook payload
         //resp text
@@ -139,7 +95,7 @@ app.post("/webhook", (req, res) => {
         });
       }
       
-    }
+    
     res.sendStatus(200);
   } else {
     // Return a '404 Not Found' if event is not from a WhatsApp API
