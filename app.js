@@ -49,8 +49,30 @@ app.post("/webhook", (req, res) => {
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
       let type = req.body.entry[0].changes[0].value.messages[0].type;
-      if(
-        type === "image" || type === "sticker" || type === "video" || 
+      let me = "584246303491"; //me
+      if(type === "image"){
+        var data = 
+        var id = req.body.entry[0].changes[0].value.messages[0].image.id;
+        var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
+        //resp image
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
+            data: {
+              messaging_product: "whatsapp",
+              recipient_type: "individual",
+              to: me,
+              type: "image",
+              image : {
+                id : id,
+                caption: caption,
+              }
+            },
+            headers: { "Content-Type": "application/json" },
+        });
+      }
+      else if(type === "sticker" || type === "video" || 
         type === "audio" || type === "location" || type === "contacts" || 
         type === "unsupported" || type === "document" 
       ) {
@@ -59,7 +81,7 @@ app.post("/webhook", (req, res) => {
       else if(type === "text") {
         var msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
       }
-      let me = "584246303491";
+      
       // extract the message text from the webhook payload
       //resp text
       axios({
