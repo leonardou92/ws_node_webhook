@@ -52,38 +52,32 @@ app.post("/webhook", (req, res) => {
       if(
         type === "image" || type === "sticker" || type === "video" || 
         type === "audio" || type === "location" || type === "contacts" || 
-        type === "unsupported" 
+        type === "unsupported" || type === "document" 
       ) {
         var msg_body = type;  
       } 
       else if(type === "text") {
         var msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
       }
-        let me = "584246303491";
-        // extract the message text from the webhook payload
-        //resp text
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/" +
-            phone_number_id +
-            "/messages?access_token=" +
-            token,
+      let me = "584246303491";
+      // extract the message text from the webhook payload
+      //resp text
+      axios({
+        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+        url:
+          "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
           data: {
             messaging_product: "whatsapp",
             to: me,
             text: { body: "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body },
           },
           headers: { "Content-Type": "application/json" },
-        });
-        //resp template
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/" +
-            phone_number_id +
-            "/messages?access_token=" +
-            token,
+      });
+      //resp template
+      axios({
+        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+        url:
+          "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
           data: {
             "messaging_product": "whatsapp",
             "to": from,
@@ -96,12 +90,11 @@ app.post("/webhook", (req, res) => {
             }
           },
           headers: { "Content-Type": "application/json" },
-        });
-      }
-      
-    
+      });
+    }
     res.sendStatus(200);
-  } else {
+  } 
+  else {
     // Return a '404 Not Found' if event is not from a WhatsApp API
     res.sendStatus(404);
   }
@@ -129,7 +122,8 @@ app.get("/webhook", (req, res) => {
       // Respond with 200 OK and challenge token from the request
       console.send("WEBHOOK_VERIFIED");
       res.status(200).send(challenge);
-    } else {
+    } 
+    else {
       // Responds with '403 Forbidden' if verify tokens do not match
       res.sendStatus(403);
     }
