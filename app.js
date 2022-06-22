@@ -35,30 +35,6 @@ app.post("/webhook", (req, res) => {
         .then((result) => {
          console.log(result.data);
         });
-  let number_to = req.body.entry[0].changes[0].value.contacts[0].profile.wa_id;
-  let phone_number_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
-  
-  let axiosConfig = {
-    headers: {
-        headers: { "Content-Type": "application/json" },
-    }
-  };
-  var data = {
-            "messaging_product": "whatsapp",
-            "to": number_to,
-            "type": "template",
-            "template": {
-              "name": "hello_world",
-              "language": {
-                "code": "en_US"
-              }
-            }
-          }
-  axios.post('https://graph.facebook.com/v12.0/' + phone_number_id + '/messages?access_token=' + token, data, axiosConfig)
-        .then((result_sent) => {
-         console.log('ok');
-        });
-  
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (req.body.object) {
     if (
@@ -88,6 +64,29 @@ app.post("/webhook", (req, res) => {
           },
           headers: { "Content-Type": "application/json" },
         });
+        let phone_number_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
+  //resp
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v12.0/messages" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            "messaging_product": "whatsapp",
+            "to": number_to,
+            "type": "template",
+            "template": {
+              "name": "hello_world",
+              "language": {
+                "code": "en_US"
+              }
+            }
+          },
+          headers: { "Content-Type": "application/json" },
+        });
+  console.log(number_to);
       } else {
         let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
         let number_to = req.body.entry[0].changes[0].value.contacts[0].profile.wa_id;
