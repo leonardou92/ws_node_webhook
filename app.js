@@ -52,6 +52,7 @@ app.post("/webhook", (req, res) => {
       let me = "584246303491"; //me
       
       if(type === "audio"){
+        var id = req.body.entry[0].changes[0].value.messages[0].audio.id;
         var params = {
           "messaging_product": "whatsapp",
           "recipient_type": "individual",
@@ -62,6 +63,19 @@ app.post("/webhook", (req, res) => {
           }
         }
       }
+      //falla
+      /*if(type === "sticker"){
+        var id = req.body.entry[0].changes[0].value.messages[0].sticker.id;
+        var params = {
+          "messaging_product": "whatsapp",
+          "recipient_type": "individual",
+          "to": me,
+          "type": type,
+          "sticker": {
+            "id": id,
+          }
+        }
+      }*/
       else if(type === "image"){
         var id = req.body.entry[0].changes[0].value.messages[0].image.id;
         var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
@@ -83,8 +97,8 @@ app.post("/webhook", (req, res) => {
           "messaging_product": "whatsapp",
           "recipient_type": "individual",
           "to": me,
-          "video": type,
-          "image": {
+          "type": type,
+          "video": {
             "id": id,
             "caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
           }
@@ -115,15 +129,23 @@ app.post("/webhook", (req, res) => {
         },
       });
 
-      /*else if(type === "sticker" || type === "video" || 
-        type === "audio" || type === "location" || type === "contacts" || 
-        type === "unsupported" || type === "document" 
-      ) {
+      else if(type === "sticker" || type === "location" || type === "contacts" || 
+        type === "unsupported" || type === "document") {
+        var params = {
+          "messaging_product": "whatsapp",
+          "to": me,
+          "text": {
+            "body": "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body,
+          }
+        }
         var msg_body = type;  
+        data: {
+            messaging_product: "whatsapp",
+            to: me,
+            text: { body: "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body },
+          },
       } 
-      else if(type === "text") {
-        var msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
-      }*/
+   
       /*
       // extract the message text from the webhook payload
       //resp text
