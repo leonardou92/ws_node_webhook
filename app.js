@@ -54,31 +54,11 @@ app.post("/webhook", (req, res) => {
               }
             }
           }
-  axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
-        .then((result) => {
-         console.log(result.data);
+  axios.post('https://graph.facebook.com/v12.0/' + phone_number_id + '/messages?access_token=' + token, data, axiosConfig)
+        .then((result_sent) => {
+         console.log('ok');
         });
-  //resp
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/" +
-            phone_number_id +
-            "/messages?access_token=" +
-            token,
-          data: {
-            "messaging_product": "whatsapp",
-            "to": number_to,
-            "type": "template",
-            "template": {
-              "name": "hello_world",
-              "language": {
-                "code": "en_US"
-              }
-            }
-          },
-          headers: { "Content-Type": "application/json" },
-        });
+  
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (req.body.object) {
     if (
