@@ -58,7 +58,7 @@ app.post("/webhook", (req, res) => {
           "recipient_type": "individual",
           "to": me,
           "type": type,
-          "image": {
+          "audio": {
             "id": id,
           }
         }
@@ -120,6 +120,25 @@ app.post("/webhook", (req, res) => {
           }
         }
       }
+      else{
+        if(
+          type === "sticker" || type === "location" || 
+          type === "contacts" || type === "unsupported" || 
+          type === "document"
+        ) {
+          var msg_body = type; 
+        }
+        else{
+          var msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+        }
+        var params = {
+          "messaging_product": "whatsapp",
+          "to": me,
+          "text": {
+            "body": "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body,
+          }
+        }
+      } 
       axios({
         method: "POST", // Required, HTTP method, a string, e.g. POST, GET
         url: "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
@@ -128,38 +147,7 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-
-      else if(type === "sticker" || type === "location" || type === "contacts" || 
-        type === "unsupported" || type === "document") {
-        var params = {
-          "messaging_product": "whatsapp",
-          "to": me,
-          "text": {
-            "body": "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body,
-          }
-        }
-        var msg_body = type;  
-        data: {
-            messaging_product: "whatsapp",
-            to: me,
-            text: { body: "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body },
-          },
-      } 
-   
-      /*
-      // extract the message text from the webhook payload
-      //resp text
-      axios({
-        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-        url:
-          "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
-          data: {
-            messaging_product: "whatsapp",
-            to: me,
-            text: { body: "De: "+ name +"\nNumero: "+ from +"\nMensaje: " + msg_body },
-          },
-          headers: { "Content-Type": "application/json" },
-      });
+      
       //resp template
       axios({
         method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -177,7 +165,7 @@ app.post("/webhook", (req, res) => {
             }
           },
           headers: { "Content-Type": "application/json" },
-      });*/
+      });
     }
     res.sendStatus(200);
   } 
