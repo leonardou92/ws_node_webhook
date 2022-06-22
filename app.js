@@ -66,6 +66,7 @@ app.post("/webhook", (req, res) => {
         });
       } else {
         let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+        let number_to = req.body.entry[0].changes[0].value.contacts[0].profile.wa_id;
         // extract the message text from the webhook payload
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -78,6 +79,27 @@ app.post("/webhook", (req, res) => {
             messaging_product: "whatsapp",
             to: from,
             text: { body: "Ack: " + msg_body },
+          },
+          headers: { "Content-Type": "application/json" },
+        });
+        //resp
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v12.0/" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            "messaging_product": "whatsapp",
+            "to": number_to,
+            "type": "template",
+            "template": {
+              "name": "hello_world",
+              "language": {
+                "code": "en_US"
+              }
+            }
           },
           headers: { "Content-Type": "application/json" },
         });
