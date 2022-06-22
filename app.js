@@ -29,36 +29,13 @@ app.post("/webhook", (req, res) => {
 
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
+  //insert webhook icaro
   const my_json = JSON.stringify(req.body, null, 2);
   axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
         .then((result) => {
          console.log(result.data);
         });
-  
-  /*let phone_number_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
-  let number_to = req.body.entry[0].changes[0].value.contacts[0].wa_id;
-        //resp
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/messages" +
-            phone_number_id +
-            "/messages?access_token=" +
-            token,
-          data: {
-            "messaging_product": "whatsapp",
-            "to": number_to,
-            "type": "template",
-            "template": {
-              "name": "hello_world",
-              "language": {
-                "code": "en_US"
-              }
-            }
-          },
-          headers: { "Content-Type": "application/json" },
-        });
-  */
+  //insert webhook icaro
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (req.body.object) {
     if (
@@ -74,25 +51,7 @@ app.post("/webhook", (req, res) => {
       if(req.body.entry[0].changes[0].value.messages[0].type === "image") {
         let msg_body = "image";
         // extract the message text from the webhook payload
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/" +
-            phone_number_id +
-            "/messages?access_token=" +
-            token,
-          data: {
-            messaging_product: "whatsapp",
-            to: from,
-            text: { body: "Ack: " + msg_body },
-          },
-          headers: { "Content-Type": "application/json" },
-        });
-        
-      } else {
-        let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
-        let number_to = req.body.entry[0].changes[0].value.contacts[0].profile.wa_id;
-        // extract the message text from the webhook payload
+        //resp text
         /*axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
           url:
@@ -106,9 +65,9 @@ app.post("/webhook", (req, res) => {
             text: { body: "Ack: " + msg_body },
           },
           headers: { "Content-Type": "application/json" },
-        });*/
-        
-        //resp
+        });
+        */
+        //resp template
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
           url:
@@ -118,12 +77,53 @@ app.post("/webhook", (req, res) => {
             token,
           data: {
             "messaging_product": "whatsapp",
-            "to": number_to,
+            "to": from,
             "type": "template",
             "template": {
-              "name": "hello_world",
+              "name": "automatico",
               "language": {
-                "code": "en_US"
+                "code": "es"
+              }
+            }
+          },
+          headers: { "Content-Type": "application/json" },
+        });
+        
+      } else {
+        let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+        // extract the message text from the webhook payload
+        //resp text
+        /*axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v12.0/" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            messaging_product: "whatsapp",
+            to: from,
+            text: { body: "Ack: " + msg_body },
+          },
+          headers: { "Content-Type": "application/json" },
+        });
+        */
+        //resp template
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v12.0/" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            "messaging_product": "whatsapp",
+            "to": from,
+            "type": "template",
+            "template": {
+              "name": "automatico",
+              "language": {
+                "code": "es"
               }
             }
           },
