@@ -25,6 +25,17 @@ app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
 // Accepts POST requests at /webhook endpoint
 app.post("/webhook", (req, res) => {
   
+  
+  const verify_token = process.env.VERIFY_TOKEN;
+
+  // Parse params from the webhook verification request
+  let mode = req.query["hub.mode"];
+  let token = req.query["hub.verify_token"];
+  let challenge = req.query["hub.challenge"];
+  console.log(mode);
+  console.log(token);
+  console.log(challenge);
+  
   // Parse the request body from the POST
   let body = req.body;
 
@@ -188,7 +199,7 @@ app.get("/webhook", (req, res) => {
 
   // Parse params from the webhook verification request
   let mode = req.query["hub.mode"];
-  const token = req.query["hub.verify_token"];
+  let token = req.query["hub.verify_token"];
   let challenge = req.query["hub.challenge"];
   
   // Check if a token and mode were sent
