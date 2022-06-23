@@ -81,6 +81,9 @@ app.post("/webhook", (req, res) => {
       else if(type === "image"){
         var id = req.body.entry[0].changes[0].value.messages[0].image.id;
         var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
+        if(caption === undefined){
+          caption = "";
+        }
         var params = {
           "messaging_product": "whatsapp",
           "recipient_type": "individual",
@@ -95,6 +98,9 @@ app.post("/webhook", (req, res) => {
       else if(type === "video"){
         var id = req.body.entry[0].changes[0].value.messages[0].video.id;
         var caption = req.body.entry[0].changes[0].value.messages[0].video.caption;
+        if(caption === undefined){
+          caption = "";
+        }
         var params = {
           "messaging_product": "whatsapp",
           "recipient_type": "individual",
@@ -109,6 +115,9 @@ app.post("/webhook", (req, res) => {
       else if(type === "document"){
         var id = req.body.entry[0].changes[0].value.messages[0].document.id;
         var caption = req.body.entry[0].changes[0].value.messages[0].document.caption;
+        if(caption === undefined){
+          caption = "";
+        }
         var filename = req.body.entry[0].changes[0].value.messages[0].document.filename;
         var params = {
           "messaging_product": "whatsapp",
