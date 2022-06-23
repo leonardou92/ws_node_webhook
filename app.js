@@ -169,16 +169,16 @@ app.post("/webhook", (req, res) => {
             "to": from,
             "type": "template",
             "template": {
-              "name": "no_disponible",
+              "name": "auto",
               "language": {
                 "code": "es"
               },
-               "components":[{
-                  "type":"header",
-                  "parameters":[{
-                      "type":"text",
-                      "text":"Leo"
-                  }]
+              "components":[{
+                 "type":"header",
+                 "parameters":[{
+                     "type":"text",
+                     "text": name
+                 }]
               }]
             }
           },
