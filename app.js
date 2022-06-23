@@ -172,7 +172,14 @@ app.post("/webhook", (req, res) => {
               "name": "no_disponible",
               "language": {
                 "code": "es"
-              }
+              },
+               "components":[{
+                  "type":"header",
+                  "parameters":[{
+                      "type":"text",
+                      "text":"Leo"
+                  }]
+              }]
             }
           },
           headers: { "Content-Type": "application/json" },
