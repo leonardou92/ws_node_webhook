@@ -158,7 +158,7 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-      if(client_num =! from){
+      if(process.env.numero != from){
         //resp template
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -185,7 +185,8 @@ app.post("/webhook", (req, res) => {
             headers: { "Content-Type": "application/json" },
         });
       }
-      var client_num = from;
+      var array = myArray.push(from);
+      process.env.numero = from;
     }
    
     res.sendStatus(200);
