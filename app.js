@@ -185,8 +185,6 @@ app.post("/webhook", (req, res) => {
             headers: { "Content-Type": "application/json" },
         });
       }
-      var array = myArray.push(from);
-      process.env.numero = from;
     }
    
     res.sendStatus(200);
