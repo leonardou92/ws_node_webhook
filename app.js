@@ -158,33 +158,36 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-      
-      //resp template
-      axios({
-        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-        url:
-          "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
-          data: {
-            "messaging_product": "whatsapp",
-            "to": from,
-            "type": "template",
-            "template": {
-              "name": "auto",
-              "language": {
-                "code": "es"
-              },
-              "components":[{
-                 "type":"header",
-                 "parameters":[{
-                     "type":"text",
-                     "text": name
-                 }]
-              }]
-            }
-          },
-          headers: { "Content-Type": "application/json" },
-      });
+      if(client_num =! from){
+        //resp template
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
+            data: {
+              "messaging_product": "whatsapp",
+              "to": from,
+              "type": "template",
+              "template": {
+                "name": "auto",
+                "language": {
+                  "code": "es"
+                },
+                "components":[{
+                   "type":"header",
+                   "parameters":[{
+                       "type":"text",
+                       "text": name
+                   }]
+                }]
+              }
+            },
+            headers: { "Content-Type": "application/json" },
+        });
+      }
+      var client_num = from;
     }
+   
     res.sendStatus(200);
   } 
   else {
