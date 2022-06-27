@@ -188,10 +188,10 @@ app.post("/webhook", (req, res) => {
             headers: { "Content-Type": "application/json" },
         });
         if(numero_guardado === ""){
-          var numero_guardado = [from];
+          var numero_guardado = [{from}];
         }
         else{
-          numero_guardado.push(from);
+          //numero_guardado.push({from});
         }
         process.env.numero = numero_guardado;
         console.log(numero_guardado);
