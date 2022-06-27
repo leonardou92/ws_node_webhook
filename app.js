@@ -163,7 +163,8 @@ app.post("/webhook", (req, res) => {
       var resp_json = {numero : from};
       var numero_guardado = axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
           .then((result) => {
-          console.log(result.data);
+          //console.log(result.data);
+          return result.data;
           });
       if(numero_guardado === "NO"){
         //resp template
