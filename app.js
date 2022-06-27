@@ -159,8 +159,15 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-    
-      //resp template
+      //validate resp
+      var resp_json = {numero : from};
+        var numero_guardado = axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
+          .then((result) => {
+          console.log(result.data);
+          });
+  
+      if(numero_guardado === "NO"){
+        //resp template
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
           url:
@@ -186,7 +193,7 @@ app.post("/webhook", (req, res) => {
             headers: { "Content-Type": "application/json" },
         });
       }
-    
+    }
     res.sendStatus(200);
   } 
   else {
