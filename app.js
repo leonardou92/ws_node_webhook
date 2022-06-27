@@ -50,13 +50,13 @@ app.post("/webhook", (req, res) => {
       //validate resp
       function resp_plantilla(){
         var resp_json = {numero : from};
-        let respuesta = axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
+        return axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
           .then((result) => {
           console.log(result.data);
+          
         });
-        return respuesta;
       }
-      var numero_guardado = resp_plantilla();
+      let numero_guardado = resp_plantilla();
       console.log(numero_guardado);
       //validate resp
       //insert webhook icaro
