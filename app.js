@@ -50,11 +50,8 @@ app.post("/webhook", (req, res) => {
       //validate resp
       async function resp_template(){
         var resp_json = {numero : from};
-        var numero_guardado = await axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
-          .then((result) => {
-          //console.log(result.data);
-          return result.data;
-          });
+        return axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
+          .then(result => result.data);
       }
       var numero_guardado = resp_template();
       console.log(numero_guardado);
