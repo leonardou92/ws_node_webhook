@@ -159,6 +159,7 @@ app.post("/webhook", (req, res) => {
         },
       });
       var numero_guardado = process.env.numero;
+      console.log(numero_guardado);
       if(numero_guardado != from){
         //resp template
         axios({
@@ -191,7 +192,7 @@ app.post("/webhook", (req, res) => {
         else{
           numero_guardado.push(from);
         }
-        console.log(numero_guardado.length);
+        console.log(numero_guardado);
       }
     }
    
