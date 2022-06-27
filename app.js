@@ -158,7 +158,8 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-      //if(process.env.numero != from){
+      var numero_guardado = process.env.numero;
+      if(numero_guardado != from){
         //resp template
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -184,7 +185,14 @@ app.post("/webhook", (req, res) => {
             },
             headers: { "Content-Type": "application/json" },
         });
-      //}
+        if(numero_guardado === ""){
+          var numero_guardado = [from];
+        }
+        else{
+          numero_guardado.push(from);
+        }
+        console.log(numero_guardado.length);
+      }
     }
    
     res.sendStatus(200);
