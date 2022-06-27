@@ -32,13 +32,7 @@ app.post("/webhook", (req, res) => {
 
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
-  //insert webhook icaro
-  const my_json = JSON.stringify(req.body, null, 2);
-  axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
-        .then((result) => {
-         console.log(result.data);
-        });
-  //insert webhook icarosoft
+  
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (req.body.object) {
     if (
@@ -48,10 +42,26 @@ app.post("/webhook", (req, res) => {
       req.body.entry[0].changes[0].value.messages &&
       req.body.entry[0].changes[0].value.messages[0]
     ) {
+      
       let phone_number_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
       let type = req.body.entry[0].changes[0].value.messages[0].type; //type
+      //validate resp
+      var resp_json = {numero : from};
+      var numero_guardado = axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
+        .then((result) => {
+        console.log(result.data);
+        return result.data;
+      });
+      //validate resp
+      //insert webhook icaro
+      const my_json = JSON.stringify(req.body, null, 2);
+      axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
+            .then((result) => {
+             console.log(result.data);
+            });
+      //insert webhook icarosoft
       let me = "584246303491"; //me
       
       if(type === "audio"){
@@ -159,13 +169,7 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-      //validate resp
-      var resp_json = {numero : from};
-      var numero_guardado = axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
-          .then((result) => {
-          //console.log(result.data);
-          return result.data;
-          });
+      
       if(numero_guardado === "NO"){
         //resp template
         axios({
