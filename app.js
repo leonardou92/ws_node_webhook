@@ -51,16 +51,17 @@ app.post("/webhook", (req, res) => {
       var resp_json = {numero : from};
       var numero_guardado = axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
         .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         return result.data;
       });
+      console.log(numero_guardado);
       //validate resp
       //insert webhook icaro
-      const my_json = JSON.stringify(req.body, null, 2);
+      /*const my_json = JSON.stringify(req.body, null, 2);
       axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
             .then((result) => {
              console.log(result.data);
-            });
+            });*/
       //insert webhook icarosoft
       let me = "584246303491"; //me
       
