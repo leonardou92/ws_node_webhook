@@ -17,7 +17,9 @@ const request = require("request"),
   express = require("express"),
   body_parser = require("body-parser"),
   axios = require("axios").default,
+  numero_guardado = [],
   app = express().use(body_parser.json()); // creates express http server
+  
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
@@ -158,7 +160,6 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-      var numero_guardado = process.env.numero;
       console.log(numero_guardado);
       if(numero_guardado != from){
         //resp template
