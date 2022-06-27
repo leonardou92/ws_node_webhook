@@ -17,7 +17,6 @@ const request = require("request"),
   express = require("express"),
   body_parser = require("body-parser"),
   axios = require("axios").default,
-  numero_guardado = [],
   app = express().use(body_parser.json()); // creates express http server
   
 
@@ -160,6 +159,7 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
+      var numero_guardado = process.env.numero;
       console.log(numero_guardado);
       if(numero_guardado != from){
         //resp template
@@ -193,6 +193,7 @@ app.post("/webhook", (req, res) => {
         else{
           numero_guardado.push(from);
         }
+        process.env.numero = numero_guardado;
         console.log(numero_guardado);
       }
     }
