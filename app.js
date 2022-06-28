@@ -48,18 +48,19 @@ app.post("/webhook", (req, res) => {
       let name = req.body.entry[0].changes[0].value.contacts[0].profile.name; //name
       let type = req.body.entry[0].changes[0].value.messages[0].type; //type
       //validate resp
-      async function resp_template() {
-        try {
-          var resp_json = {numero : from};
-          return await axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
-          .then(response => { return response.data});
-        }
-        catch (error) {
-          console.error(error);
+      var resp_json = {numero : from};
+      const respuesta = () =>{
+        return axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
+          .then(response => { 
+            console.log(response.data);
+          });   
         }
       }
-      var numero_guardado = resp_template();
-      console.log(numero_guardado);
+      catch (error) {
+        console.error(error);
+      }
+      //var numero_guardado = resp_template();
+      //console.log(numero_guardado);
       //validate resp
       //insert webhook icaro
       /*const my_json = JSON.stringify(req.body, null, 2);
