@@ -53,14 +53,19 @@ app.post("/webhook", (req, res) => {
         let resp_json = {numero : from};
         let url = 'http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/';
         const promise =  axios.post(url,resp_json);
-        const dataPromise = promise.then((response) => response.data)
+        const dataPromise = promise.then((response) => { 
+          let res = response.data;
+          console.log(res) 
+          return res;
+        })
+        console.log(dataPromise)
         return dataPromise;
+        
       }
       
-        
-      var numero_guardado = ws_resp();
+      let numero_guardado = ws_resp();
       //var numero_guardado = resp_template();
-      console.log(numero_guardado);
+      //console.log(numero_guardado);
       //validate resp
       //insert webhook icaro
       /*const my_json = JSON.stringify(req.body, null, 2);
