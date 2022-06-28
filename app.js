@@ -195,8 +195,14 @@ app.post("/webhook", (req, res) => {
               },
               headers: { "Content-Type": "application/json" },
           });
-          
         }
+        //insert webhook icaro
+        const my_json = JSON.stringify(req.body, null, 2);
+        axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
+        .then((result) => {
+          console.log(result.data);
+        });
+        //insert webhook icarosoft
       })()
       .catch(console.log)
     }
