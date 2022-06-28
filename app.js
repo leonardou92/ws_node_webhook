@@ -50,16 +50,13 @@ app.post("/webhook", (req, res) => {
       //validate resp
       
       function ws_resp(){
-        return new Promise((resolve, reject) => {
-          let resp_json = {numero : from};
-          let url = 'http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/';
-          axios.post(url,resp_json)
-            .then(res => {
-                resolve(res)
-            })
-            .catch(err => reject(err))
-        })
+        let resp_json = {numero : from};
+        let url = 'http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/';
+        const promise =  axios.post(url,resp_json);
+        const dataPromise = promise.then((response) => response.data)
+        return dataPromise;
       }
+      
         
       var numero_guardado = ws_resp();
       //var numero_guardado = resp_template();
