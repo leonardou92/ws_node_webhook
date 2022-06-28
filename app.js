@@ -49,18 +49,15 @@ app.post("/webhook", (req, res) => {
       let type = req.body.entry[0].changes[0].value.messages[0].type; //type
       //validate resp
       
-      function ws_resp(){
-        
+      async function ws_resp(){
         let resp_json = {numero : from};
         let url = 'http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/';
-        const promise =  axios.post(url,resp_json);
-        const dataPromise = promise.then((response) => { 
-          let res = response.data;
-          console.log(res) 
-          return res;
-        })
-        console.log(dataPromise)
-        return dataPromise;
+        const getResponse = await axios
+          .get(url,resp_json)
+          .then((response) => response.data)
+          .catch((err) => console.log(err));
+        console.log(getResponse);
+        return getResponse;
         
       }
       
