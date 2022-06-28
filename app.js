@@ -57,13 +57,11 @@ app.post("/webhook", (req, res) => {
           .then((response) => response.data)
           .catch((err) => console.log(err));
       }
-      let numero_guardado = (async () => {
-         console.log(await ws_resp())
-      })()
       
-      let numero_guardado = ws_resp();
+      
+      //let numero_guardado = "";
       //var numero_guardado = resp_template();
-      console.log(numero_guardado);
+      //console.log(numero_guardado);
       //validate resp
       //insert webhook icaro
       /*const my_json = JSON.stringify(req.body, null, 2);
@@ -179,41 +177,45 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-      
-      if(numero_guardado === "NO"){
-        //resp template
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
-            data: {
-              "messaging_product": "whatsapp",
-              "to": from,
-              "type": "template",
-              "template": {
-                "name": "auto",
-                "language": {
-                  "code": "es"
-                },
-                "components":[{
-                   "type":"header",
-                   "parameters":[{
-                       "type":"text",
-                       "text": name
-                   }]
-                }]
-              }
-            },
-            headers: { "Content-Type": "application/json" },
-        });
+      (async () => {
+        var numero_guardado = await ws_resp();
+        if(numero_guardado === "NO"){
+          //resp template
+          axios({
+            method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+            url:
+              "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
+              data: {
+                "messaging_product": "whatsapp",
+                "to": from,
+                "type": "template",
+                "template": {
+                  "name": "auto",
+                  "language": {
+                    "code": "es"
+                  },
+                  "components":[{
+                     "type":"header",
+                     "parameters":[{
+                         "type":"text",
+                         "text": name
+                     }]
+                  }]
+                }
+              },
+              headers: { "Content-Type": "application/json" },
+          });
+        }
       }
-    }
-    res.sendStatus(200);
-  } 
-  else {
-    // Return a '404 Not Found' if event is not from a WhatsApp API
-    res.sendStatus(404);
-  }
+      //res.sendStatus(200);
+      else {
+        // Return a '404 Not Found' if event is not from a WhatsApp API
+        //res.sendStatus(404);
+      }
+      })
+      
+      
+      
 });
 
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
