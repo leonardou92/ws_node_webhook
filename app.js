@@ -179,6 +179,7 @@ app.post("/webhook", (req, res) => {
       });
       (async () => {
         var numero_guardado = await ws_resp();
+        console.log(numero_guardado);
         if(numero_guardado === "NO"){
           //resp template
           axios({
@@ -203,19 +204,17 @@ app.post("/webhook", (req, res) => {
                   }]
                 }
               },
-              headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" },
           });
+          res.sendStatus(200);
+        } 
+        else {
+          // Return a '404 Not Found' if event is not from a WhatsApp API
+          res.sendStatus(404);
         }
-      }
-      //res.sendStatus(200);
-      else {
-        // Return a '404 Not Found' if event is not from a WhatsApp API
-        //res.sendStatus(404);
-      }
       })
-      
-      
-      
+    }
+  }
 });
 
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
