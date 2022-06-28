@@ -57,19 +57,8 @@ app.post("/webhook", (req, res) => {
           .then((response) => response.data)
           .catch((err) => console.log(err));
       }
+
       
-      
-      let numero_guardado = "";
-      //var numero_guardado = resp_template();
-      console.log(numero_guardado);
-      //validate resp
-      //insert webhook icaro
-      /*const my_json = JSON.stringify(req.body, null, 2);
-      axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
-            .then((result) => {
-             console.log(result.data);
-            });*/
-      //insert webhook icarosoft
       let me = "584246303491"; //me
       
       if(type === "audio"){
@@ -177,40 +166,39 @@ app.post("/webhook", (req, res) => {
           "Content-Type": "application/json" 
         },
       });
-      let respuesta = (async () => {
+      (async () => {
         var respuesta = await ws_resp()
         console.log(respuesta);
-        return respuesta;
+           if(respuesta === "NO"){
+          //resp template
+           var $post = axios({
+            method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+            url:
+              "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
+              data: {
+                "messaging_product": "whatsapp",
+                "to": from,
+                "type": "template",
+                "template": {
+                  "name": "auto",
+                  "language": {
+                    "code": "es"
+                  },
+                  "components":[{
+                     "type":"header",
+                     "parameters":[{
+                         "type":"text",
+                         "text": name
+                     }]
+                  }]
+                }
+              },
+              headers: { "Content-Type": "application/json" },
+          });
+          
+        }
       })()
       .catch(console.log)
-      console.log(respuesta);
-      if(numero_guardado === "NO"){
-        //resp template
-        axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-          url:
-            "https://graph.facebook.com/v12.0/"+ phone_number_id +"/messages?access_token="+ token,
-            data: {
-              "messaging_product": "whatsapp",
-              "to": from,
-              "type": "template",
-              "template": {
-                "name": "auto",
-                "language": {
-                  "code": "es"
-                },
-                "components":[{
-                   "type":"header",
-                   "parameters":[{
-                       "type":"text",
-                       "text": name
-                   }]
-                }]
-              }
-            },
-            headers: { "Content-Type": "application/json" },
-        });
-      }
     }
     res.sendStatus(200);
   } 
