@@ -49,8 +49,14 @@ app.post("/webhook", (req, res) => {
       let type = req.body.entry[0].changes[0].value.messages[0].type; //type
       //validate resp
       async function resp_template() {
-        var resp_json = {numero : from};
-        axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json).then(function(response){ return response;});
+        try {
+          var resp_json = {numero : from};
+          return await axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_resp/',resp_json)
+          .then(response => { return response.data});
+        }
+        catch (error) {
+          console.error(error);
+        }
       }
       var numero_guardado = resp_template();
       console.log(numero_guardado);
