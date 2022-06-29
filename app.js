@@ -79,8 +79,7 @@ app.post("/webhook", (req, res) => {
           }
         }
       }
-      //falla
-      /*if(type === "sticker"){
+      if(type === "sticker"){
         var id = req.body.entry[0].changes[0].value.messages[0].sticker.id;
         var params = {
           "messaging_product": "whatsapp",
@@ -89,9 +88,10 @@ app.post("/webhook", (req, res) => {
           "type": type,
           "sticker": {
             "id": id,
+            //"caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
           }
         }
-      }*/
+      }
       else if(type === "image"){
         var id = req.body.entry[0].changes[0].value.messages[0].image.id;
         var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
@@ -147,9 +147,8 @@ app.post("/webhook", (req, res) => {
       }
       else{
         if(
-          type === "sticker" || type === "location" || 
-          type === "contacts" || type === "unsupported" || 
-          type === "document"
+          type === "location" || type === "contacts" || 
+          type === "unsupported" || type === "document"
         ) {
           var msg_body = type; 
         }
