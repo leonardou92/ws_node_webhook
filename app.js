@@ -148,7 +148,8 @@ app.post("/webhook", (req, res) => {
       else{
         if(
           type === "location" || type === "contacts" || 
-          type === "unsupported" || type === "document"
+          type === "unsupported" || type === "document" ||
+          type === "button"
         ) {
           var msg_body = type; 
         }
