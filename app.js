@@ -31,7 +31,7 @@ app.post("/webhook", (req, res) => {
   let body = req.body;
 
   // Check the Incoming webhook message
-  console.log(JSON.stringify(req.body, null, 2));
+  //console.log(JSON.stringify(req.body, null, 2));
   
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (req.body.object) {
@@ -169,7 +169,7 @@ app.post("/webhook", (req, res) => {
       (async () => {
         var respuesta = await ws_resp()
         console.log(respuesta);
-           if(respuesta === "NO"){
+        if(respuesta === "NO"){
           //resp template
            var $post = axios({
             method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -196,16 +196,17 @@ app.post("/webhook", (req, res) => {
               headers: { "Content-Type": "application/json" },
           });
         }
-        //insert webhook icaro
-        const my_json = JSON.stringify(req.body, null, 2);
-        axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
-        .then((result) => {
-          console.log(result.data);
-        });
-        //insert webhook icarosoft
       })()
-      .catch(console.log)
+      .catch(console.log);
+      //insert webhook icaro
+      const my_json = JSON.stringify(req.body, null, 2);
+      axios.post('http://scryptcase.tecnovenca.net:8091/scriptcase/app/webservice/ws_web/',my_json)
+      .then((result) => {
+        console.log(result.data);
+      });
+      //insert webhook icarosoft
     }
+    
     res.sendStatus(200);
   } 
   else {
