@@ -67,7 +67,8 @@ app.post("/webhook", (req, res) => {
       
       let me = "584246303491"; //me
       
-      if(type === "sticker"){
+      
+      /*if(type === "sticker"){
         var id = req.body.entry[0].changes[0].value.messages[0].sticker.id;
         var params = {
           "messaging_product": "whatsapp",
@@ -79,8 +80,8 @@ app.post("/webhook", (req, res) => {
             //"caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
           }
         }
-      }
-      else if(type === "image"){
+      }*/
+      if(type === "image"){
         var id = req.body.entry[0].changes[0].value.messages[0].image.id;
         var caption = req.body.entry[0].changes[0].value.messages[0].image.caption;
         if(caption === undefined){
@@ -133,23 +134,11 @@ app.post("/webhook", (req, res) => {
           }
         }
       }
-      if(type === "audio"){
-        var id = req.body.entry[0].changes[0].value.messages[0].audio.id;
-        var params = {
-          "messaging_product": "whatsapp",
-          "recipient_type": "individual",
-          "to": me,
-          "type": type,
-          "audio": {
-            "id": id,
-          }
-        }
-      }
       else{
         if(
           type === "location" || type === "contacts" || 
           type === "unsupported" || type === "document" ||
-          type === "button"
+          type === "button" || type === "sticker"
         ) {
           var msg_body = type; 
         }
