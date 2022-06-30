@@ -67,18 +67,6 @@ app.post("/webhook", (req, res) => {
       
       let me = "584246303491"; //me
       
-      if(type === "audio"){
-        var id = req.body.entry[0].changes[0].value.messages[0].audio.id;
-        var params = {
-          "messaging_product": "whatsapp",
-          "recipient_type": "individual",
-          "to": me,
-          "type": type,
-          "audio": {
-            "id": id,
-          }
-        }
-      }
       if(type === "sticker"){
         var id = req.body.entry[0].changes[0].value.messages[0].sticker.id;
         var params = {
@@ -142,6 +130,18 @@ app.post("/webhook", (req, res) => {
             "id": id,
             "caption": "De: "+ name +"\nNumero: "+ from +"\n"+caption,
             "filename": filename
+          }
+        }
+      }
+      if(type === "audio"){
+        var id = req.body.entry[0].changes[0].value.messages[0].audio.id;
+        var params = {
+          "messaging_product": "whatsapp",
+          "recipient_type": "individual",
+          "to": me,
+          "type": type,
+          "audio": {
+            "id": id,
           }
         }
       }
